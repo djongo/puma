@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>up (CreateDefaultRoles)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File migrate/20100510202731_create_default_roles.rb, line 2</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">up</span>
+    <span class="ruby-identifier">r1</span> = <span class="ruby-constant">Role</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">:name=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'author'</span>,<span class="ruby-identifier">:show_name=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'Author'</span>)
+    <span class="ruby-identifier">r1</span>.<span class="ruby-identifier">save</span>
+    
+    <span class="ruby-identifier">r2</span> = <span class="ruby-constant">Role</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">:name=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'publication_group'</span>,<span class="ruby-identifier">:show_name=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'Publication Group'</span>)
+    <span class="ruby-identifier">r2</span>.<span class="ruby-identifier">save</span>
+    
+    <span class="ruby-identifier">r3</span> = <span class="ruby-constant">Role</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">:name=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'hbsc_member'</span>,<span class="ruby-identifier">:show_name=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'HSBC Member'</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

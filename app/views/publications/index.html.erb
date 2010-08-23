@@ -1,0 +1,24 @@
+<% title "Publications" %>
+
+<% form_tag publications_path, :method => :get do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
+
+<div id="publications">
+  <% for publication in @publications %>
+    <h2>
+      <%= link_to h(publication.title), publication %>
+    </h2>
+  <i>- a <%=h publication.publication_type.name %> in <%=h publication.language.name %></i>
+    <p><%=h truncate(simple_format(publication.description), :omission => "...", :length => 300) %>
+    <%= link_to "Edit", edit_publication_path(publication) %> | <%= link_to "Destroy", publication, :confirm => 'Are you sure?', :method => :delete %></p>
+  <hr>
+  <% end %>
+</div>
+
+<% if permitted_to? :create, Publication.new %>
+  <p><%= link_to "New Publication", new_publication_path %></p>
+<% end %>

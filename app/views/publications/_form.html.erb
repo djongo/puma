@@ -1,0 +1,95 @@
+<% semantic_form_for @publication do |f| %>
+  <% f.inputs do %>
+    <%= f.input :title %>
+
+
+<div class="line_of_boxes">
+  <div class="box_in_line">
+    Keyword(s):
+    <div id="keyword_children" class="box_in_line_content">
+      <% f.fields_for :keywords do |keyword_form| %>
+        <%= render :partial => 'keyword', :locals => { :f => keyword_form } %>
+      <% end %>
+    </div>
+    <%= add_child_link "Add a keyword", 'keyword', f  %>  
+  </div>
+  <div class="box_bottom"></div>
+</div>
+
+
+   
+    <%= f.input :publication_type, :as => :select, :prompt => "Select one..." %>
+    <%= f.input :language, :as => :select, :prompt => "Select one..." %>
+    <%= f.input :description %>
+  <% end %>
+  
+  Author(s):
+     <div id="authorship_children">
+       <% f.fields_for :authorships do |authorship_form| %>
+         <%= render :partial => 'authorship', :locals => { :f => authorship_form } %>
+       <% end %>
+     </div>
+   <%= add_child_change_link "Add an author", 'authorship', f  %>  
+   
+   
+<h3>Data</h3>   
+<div class="line_of_boxes">
+  <div class="box_in_line">
+    Survey data
+    <div id="foundation_children" class="box_in_line_content">
+      <% f.fields_for :foundations do |foundation_form| %>
+        <%= render :partial => 'foundation', :locals => { :f => foundation_form } %>
+      <% end %>
+    </div>
+    <%= add_child_link "Add a dataset", 'foundation', f  %>  
+  </div>
+  
+  <div class="box_in_line">
+    Populations(s):
+    <div id="inclusion_children" class="box_in_line_content">
+      <% f.fields_for :inclusions do |inclusion_form| %>
+        <%= render :partial => 'inclusion', :locals => { :f => inclusion_form } %>
+      <% end %>
+    </div>      
+    <%= add_child_link "Add a population", 'inclusion', f  %>  
+  </div>
+  <div class="box_bottom"></div>
+</div>
+ 
+<h3>Variables</h3> 
+ <div class="line_of_boxes">
+  <div class="box_in_line">
+    Outcome measure(s):
+    <div id="outcome_children" class="box_in_line_content">
+      <% f.fields_for :outcomes do |outcome_form| %>
+        <%= render :partial => 'outcome', :locals => { :f => outcome_form } %>
+      <% end %>
+    </div>
+    <%= add_child_link "Add an outcome measure", 'outcome', f  %>  
+  </div>
+
+  <div class="box_in_line">
+    Determinant(s):
+    <div id="determinant_children" class="box_in_line_content">
+      <% f.fields_for :determinants do |determinant_form| %>
+        <%= render :partial => 'determinant', :locals => { :f => determinant_form } %>
+      <% end %>
+    </div>
+    <%= add_child_link "Add a determinant", 'determinant', f  %>
+  </div>
+  
+  <div class="box_in_line">
+    Confounder(s)/mediator(s):
+    <div id="mediator_children" class="box_in_line_content">
+      <% f.fields_for :mediators do |mediator_form| %>
+        <%= render :partial => 'mediator', :locals => { :f => mediator_form } %>
+      <% end %>
+    </div>
+    <%= add_child_link "Add a mediator", 'mediator', f  %>
+  </div>
+  
+   <div class="box_bottom"></div>
+</div>
+
+  <%= f.buttons %>
+<% end %>

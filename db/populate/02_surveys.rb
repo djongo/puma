@@ -1,0 +1,8 @@
+Survey.create_or_update(:id => 1, :name => "83/84")
+Survey.create_or_update(:id => 2, :name => "85/86")
+Survey.create_or_update(:id => 3, :name => "89/90")
+Survey.create_or_update(:id => 4, :name => "93/94")
+Survey.create_or_update(:id => 5, :name => "97/98")
+Survey.create_or_update(:id => 6, :name => "01/02")
+Survey.create_or_update(:id => 7, :name => "05/06")
+Survey.create_or_update(:id => 8, :name => "09/10")
