@@ -5,7 +5,13 @@ class PublicationsController < ApplicationController
   auto_complete_for :variable, :name
  
   def index
-    @publications = Publication.search params[:search], :match_mode => :any
+   # @publications = Publication.search params[:search], :match_mode => :any
+#   @publications = Publication.all
+    if(params[:search]).blank?
+      @publications = Publication.all.paginate(:page => params[:page], :per_page => 5, :order => 'title')
+    else
+      @publications = Publication.with_query(params[:search]).paginate( :page => params[:page], :per_page => 5, :order => 'title')
+    end
   end
   
   def show
@@ -49,19 +55,19 @@ class PublicationsController < ApplicationController
     redirect_to publications_url
   end
   
-  def submit_for_planned
-    flash[:notice] = "Submit Planned"
-  end
-  def submit_for_in_progress
-    flash[:notice] = "Submit In Progress"
-  end
-  def submit_for_submitted
-    flash[:notice] = "Submit Submitted"
-  end
-  def submit_for_accepted
-    flash[:notice] = "Submit Accepted"
-  end
-  def submit_for_published
-    flash[:notice] = "Submit Published"
-  end
+#  def submit_for_planned
+#    flash[:notice] = "Submit Planned"
+#  end
+#  def submit_for_in_progress
+#    flash[:notice] = "Submit In Progress"
+#  end
+#  def submit_for_submitted
+#    flash[:notice] = "Submit Submitted"
+#  end
+#  def submit_for_accepted
+#    flash[:notice] = "Submit Accepted"
+#  end
+#  def submit_for_published
+#    flash[:notice] = "Submit Published"
+#  end
 end

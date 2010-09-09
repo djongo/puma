@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   acts_as_authentic
-  attr_accessible :email, :first_name, :last_name, :password, :password_confirmation, :role_ids, :publication_ids, :full_name
+  attr_accessible :email, :first_name, :last_name, :password, :password_confirmation, :role_ids, :publication_ids, :full_name, :publication_group?
   has_many :assignments
   has_many :roles, :through => :assignments
   has_many :authorships
@@ -19,5 +19,13 @@ class User < ActiveRecord::Base
   
   def full_name
     [first_name, last_name].join(' ') 
+  end
+
+  def publication_group?
+    role_symbols.each do |rs|
+      if rs.to_s == "publication_group"
+        return true
+      end
+    end
   end
 end

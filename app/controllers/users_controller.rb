@@ -1,9 +1,14 @@
 class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => [:show, :edit, :update]
+  before_filter :require_user, :only => [:index, :show, :edit, :update]
   
   def new
     @user = User.new
+  end
+
+  def index
+    @per_page = params[:per_page] || User.per_page || 15
+    @users = User.paginate( :per_page => @per_page, :page => params[:page] )  
   end
   
   def create
@@ -19,11 +24,14 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
+    if(@user.publication_group?)
+      @user = User.find(params[:id])
+    end
   end
 
   
   def edit
-    @user = current_user
+    @user = current_user 
   end
   
   def update

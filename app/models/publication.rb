@@ -1,6 +1,13 @@
 class Publication < ActiveRecord::Base
   #attr_accessible :title, :publication_type_id, :language_id, :description, :keyword_ids, :user_ids, :variable_ids
-#  include Workflow
+
+  acts_as_indexed :fields => [
+    :title, :description, 
+    :variable_list, :survey_list, :language_list, :email_list, :username_list, 
+    :population_list, :publication_type_list, 
+#    :focus_group_list, :country_team_list
+    ]
+ 
   belongs_to :language
   belongs_to :publication_type
   has_many :categorizations
@@ -32,63 +39,81 @@ class Publication < ActiveRecord::Base
   validates_associated :users
   accepts_nested_attributes_for :determinants, 
                                 :allow_destroy => true, 
-                                :reject_if => proc { |attrs| attrs['variable_name'].blank? }
+                                :reject_if => proc { |attrs| 
+                                attrs['variable_name'].blank? }
   
   accepts_nested_attributes_for :outcomes, 
                                 :allow_destroy => true, 
-                                :reject_if => proc { |attrs| attrs['variable_name'].blank? }                                
+                                :reject_if => proc { |attrs| 
+                                attrs['variable_name'].blank? }                                
   
   accepts_nested_attributes_for :mediators, 
                                 :allow_destroy => true, 
-                                :reject_if => proc { |attrs| attrs['variable_name'].blank? }                                
+                                :reject_if => proc { |attrs| 
+                                attrs['variable_name'].blank? }                                
 
   accepts_nested_attributes_for :keywords, 
                                 :allow_destroy => true, 
-                                :reject_if => proc { |attrs| attrs['variable_name'].blank? }    
+                                :reject_if => proc { |attrs| 
+                                attrs['variable_name'].blank? }    
 
   accepts_nested_attributes_for :foundations, 
                                 :allow_destroy => true, 
-                                :reject_if => proc { |attrs| attrs['survey_name'].blank? &&
+                                :reject_if => proc { |attrs| 
+                                attrs['survey_name'].blank? &&
                                   attrs['survey_id'].blank? }  
                                 
   accepts_nested_attributes_for :inclusions, 
                                 :allow_destroy => true, 
-                                :reject_if => proc { |attrs| attrs['population_name'].blank? &&
+                                :reject_if => proc { |attrs| 
+                                attrs['population_name'].blank? &&
                                   attrs['population_id'].blank? }       
   accepts_nested_attributes_for :authorships, 
                                 :allow_destroy => true, 
-                                :reject_if => proc { |attrs| attrs['user_name'].blank? &&
+                                :reject_if => proc { |attrs| 
+                                attrs['user_name'].blank? &&
                                   attrs['user_id'].blank? }    
   accepts_nested_attributes_for :users        
+
+
+  # functions for acts_as_indexed to enable 
+  # multi model search
   
-  define_index do
-    indexes title
-    indexes description
-#    indexes variables.name, :as => :variable_name
-#    indexes users.first_name
-#    indexes users.last_name
-#    indexes [users.first_name, users.last_name], :as => :author_name
-  end                          
+  def variable_list
+    variables.map(&:name).join(' ')
+  end
+
+  def survey_list
+    surveys.map(&:name).join(' ').to_s
+  end
+
+  def language_list
+    language.name
+  end
+
+  def email_list
+    users.map(&:email).join(' ')
+  end
   
-  workflow do
-    state :pre_planned do
-      event :submit_for_planned, :transitions_to => :planned
-    end
-    state :planned do
-      event :submit_for_in_progress, :transitions_to => :in_progress
-    end
-    state :in_progress do
-      event :submit_for_submitted, :transitions_to => :submitted
-    end
-    state :submitted do
-      event :submit_for_accepted, :transitions_to => :accepted
-    end
-    state :accepted do
-      event :submit_for_published, :transitions_to => :published
-    end
-    
-    state :published
-    
-  end #workflow
-  
+  def username_list
+    users.map(&:full_name).join(' ')
+  end
+
+  def population_list
+    populations.map(&:name).join(' ')
+  end
+
+  def publication_type_list
+    publication_type.name
+  end
+
+#  def focus_group_list
+#    focus_groups.map(&:name).join(' ')
+#  end
+
+#  def country_team_list
+#    country_teams.map(&:name).join(' ')
+#  end
+
+
 end

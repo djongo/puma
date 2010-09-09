@@ -20,6 +20,8 @@
       <%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation %>
   </p>
+
+
   <p>
     <%= f.label :roles %><br />
     <% for role in Role.all %>
@@ -27,5 +29,7 @@
       <%=h role.show_name %><br />
     <% end %>
   </p>  
+
+
   <p><%= f.submit "Submit" %></p>
 <% end %>

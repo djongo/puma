@@ -2,12 +2,16 @@
 
 <% form_tag publications_path, :method => :get do %>
   <p>
-    <%= text_field_tag :search, params[:search] %>
+    <%= text_field_tag :search, params[:search], :size => 50 %>
     <%= submit_tag "Search", :name => nil %>
+  </p>
+  <p>Searching for numbers? Use '^' in front of the number.
   </p>
 <% end %>
 
 <div id="publications">
+  <%= will_paginate(@publications) %>
+    <hr />
   <% for publication in @publications %>
     <h2>
       <%= link_to h(publication.title), publication %>
@@ -15,10 +19,10 @@
   <i>- a <%=h publication.publication_type.name %> in <%=h publication.language.name %></i>
     <p><%=h truncate(simple_format(publication.description), :omission => "...", :length => 300) %>
     <%= link_to "Edit", edit_publication_path(publication) %> | <%= link_to "Destroy", publication, :confirm => 'Are you sure?', :method => :delete %></p>
-  <hr>
+  <hr />
   <% end %>
 </div>
-
+  <%= will_paginate @publications %>
 <% if permitted_to? :create, Publication.new %>
   <p><%= link_to "New Publication", new_publication_path %></p>
 <% end %>

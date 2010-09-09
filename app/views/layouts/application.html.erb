@@ -23,6 +23,8 @@
                 <li><%= link_to "survey data", surveys_path if permitted_to? :index, :surveys %></li>
                 <li><%= link_to "populations", populations_path if permitted_to? :index, :populations %></li>
                 <li><%= link_to "publication types", publication_types_path if permitted_to? :index, :publication_types %></li>          
+                <li><%= link_to "users", users_path if permitted_to? :index, :users %></li>
+
               </ul>
 		        </li>
 

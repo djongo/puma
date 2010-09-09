@@ -2,7 +2,8 @@ class VariablesController < ApplicationController
   filter_resource_access
   
   def index
-    @variables = Variable.all
+    @per_page = params[:per_page] || Variable.per_page || 15
+    @variables = Variable.paginate( :per_page => @per_page, :page => params[:page] )
   end
   
   def show
