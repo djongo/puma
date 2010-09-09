@@ -1,0 +1,37 @@
+<% title "Users" %>
+
+<table border=1>
+  <tr>
+    <th>User (full name)</th>
+    <th>Email (login)</th>
+    <th>Created</th>
+    <th>Updated</th>
+    <th>Roles</th>
+    <th># logins (failed)</th>
+    <th>Last login</th>
+  </tr>
+  Users per page: 
+  <%= select_tag :per_page, options_for_select([15,30,60], params[:per_page].to_i),
+               :onchange => "if(this.value){window.location='?per_page='+this.value;}" %>  
+  <%= will_paginate(@users) %>
+  <% for user in @users %>
+    <tr>
+      <td><%=h user.full_name %></td>
+      <td><%=h user.email %></td>
+      <td><%=h user.created_at.strftime("%Y/%m/%d") %></td>
+      <td><%=h user.updated_at.strftime("%Y/%m/%d %H:%M") %></td>
+      <td>
+      <% user.roles.each do |role| %>
+        <%=h role.name %>
+      <% end %>
+      </td>
+      <td><%=h user.login_count %> (<font color="red"><%=h user.failed_login_count %></font>)</td>      
+      <td><%=h user.last_login_at.strftime("%Y/%m/%d %H:%M") %></td>            
+      
+      <td><%= link_to "Show", user %></td>
+      <td><%= link_to "Destroy", user, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New User", new_user_path %></p>

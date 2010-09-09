@@ -1,0 +1,20 @@
+  workflow do
+    state :pre_planned do
+      event :submit_for_planned, :transitions_to => :planned
+    end
+    state :planned do
+      event :submit_for_in_progress, :transitions_to => :in_progress
+    end
+    state :in_progress do
+      event :submit_for_submitted, :transitions_to => :submitted
+    end
+    state :submitted do
+      event :submit_for_accepted, :transitions_to => :accepted
+    end
+    state :accepted do
+      event :submit_for_published, :transitions_to => :published
+    end
+    
+    state :published
+    
+  end #workflow

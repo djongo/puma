@@ -1,0 +1,5 @@
+justinfrench-formtastic--source http://gems.github.com 
+will_paginate --version 2.3.14 --source http://gemcutter.org
+repeated_auto_complete --source http://gemcutter.org
+declarative_authorization --version 0.4.1 --source http://gemcutter.org
+authlogic --version 2.1.6 --source git://github.com/binarylogic/authlogic.git
