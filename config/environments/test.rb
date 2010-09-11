@@ -35,6 +35,10 @@ ActionMailer::Base.server_settings = {
   :port => "587",
   :domain => "localhost.localdomain",
   :authentication => :plain,
-  :user_name => "jonasholstein@gmail.com",
-  :password => "jbfd3m75"
+  :user_name => "puma.hbsc@gmail.com",
+  :password => "lrnbijxp"
 }
+  config.gem 'rspec', :lib => false, :source => 'http://gemcutter.org', :version => ">=1.3.0"
+  config.gem 'rspec-rails', :lib => false, :source => 'http://gemcutter.org', :version => ">=1.3.2"
+  config.gem 'webrat', :source => 'http://gemcutter.org'
+  config.gem 'factory_girl', :source => 'http://gemcutter.org' 
